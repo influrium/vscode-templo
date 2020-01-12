@@ -1,0 +1,55 @@
+{
+    "Foreach Loop": {
+        "description": "a foreach loop block",
+        "prefix": ["foreach"],
+        "scope": "templo",
+        "body": [
+            "::foreach $1 $2::",
+            "$0",
+            "::end::"
+        ]
+    },
+    "Use": {
+        "description": "a use block",
+        "prefix": ["use"],
+        "body": [
+            "::use $1::",
+            "$0",
+            "::end::"
+        ]
+    },
+    "Fill": {
+        "description": "a fill block",
+        "prefix": ["fill"],
+        "body": [
+            "::fill $1::",
+            "$0",
+            "::end::"
+        ]
+    },
+    "If": {
+        "description": "a if block",
+        "prefix": ["if"],
+        "body": [
+            "::if( $1 )::",
+            "$0",
+            "::end::"
+        ]
+    },
+    "elseif": {
+        "description": "a else-if block",
+        "prefix": ["elseif"],
+        "body": [
+            "::elseif( $1 )::",
+            "$0"
+        ]
+    },
+    "else": {
+        "description": "a else block",
+        "prefix": ["else"],
+        "body": [
+            "::else::",
+            "$0"
+        ]
+    }
+}

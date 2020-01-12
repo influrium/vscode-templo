@@ -1,0 +1,220 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Templo (HTML)",
+	"scopeName": "text.html.templo",
+    "comment": "Templo Template Engine",
+	"patterns": [{
+		"include": "#templotag"
+	}, {
+		"include": "#macro"
+	}, {
+		"include": "text.html.derivative"
+	}],
+	"repository": {
+		"templotag": {
+			"begin": "::",
+			"beginCaptures": {
+				"0": { "name": "punctuation.definition.block.begin.templo" }
+			},
+			"end": "::",
+			"endCaptures": {
+				"0": { "name": "punctuation.definition.block.end.templo" }
+			},
+			"name": "meta.scope.templo.block",
+			"patterns": [{
+				"include": "#expression"
+			}]
+		},
+		"macro": {
+			"begin": "(\\$\\$)([a-zA-Z_][a-zA-Z0-9_]*)(\\()",
+			"beginCaptures": {
+				"1": { "name": "punctuation.definition.block.templo" },
+				"2": { "name": "entity.name.function.templo" },
+				"3": { "name": "meta.brace.round.templo" }
+			},
+			"end": "\\)",
+			"endCaptures": {
+				"0": { "name": "meta.brace.round.templo" }
+			},
+			"patterns": [{
+				"begin": "{",
+				"beginCaptures": {
+					"0": { "name": "punctuation.definition.block.begin.templo" }
+				},
+				"end": "}",
+				"endCaptures": {
+					"0": { "name": "punctuation.definition.block.end.templo" }
+				},
+				"patterns": [{
+					"include": "text.html.templo"
+				}]
+			}, {
+				"include": "#macro"
+			}, {
+				"include": "#templotag"
+			}, {
+				"match": "[^\\)]"
+			}]
+		},
+		"expression": {
+			"patterns": [{
+				"match": "\\b(repeat)(\\.)([a-zA-Z_][a-zA-Z0-9_]*)\\b",
+				"captures": {
+					"1": { "name": "variable.language.templo" },
+					"2": { "name": "punctuation.other.templo" },
+					"3": { "name": "variable.other.templo.attribute" }
+				}
+			}, {
+				"match": "\\b(if|elseif|else|end|cond|switch|case|foreach|repeat|attr|use|fill|set|raw)\\b",
+				"name": "keyword.control.templo"
+			}, {
+				"match": "\\b(true|false|null)\\b",
+				"name": "constant.language.templo"
+			}, {
+				"match": "\\b(0(x|X)[0-9a-fA-F]*)\\b",
+				"name": "constant.numeric.hex.templo"
+			}, {
+				"match": "(\\b[0-9]+(\\.)[0-9]+\\b)|(\\b[0-9]+(\\.)(?!\\.)\\B)|(\\B(\\.)[0-9]+\\b)|(\\b[0-9]+\\b)",
+				"name": "constant.numeric.decimal.templo"
+			}, {
+				"begin": "\\b([a-zA-Z_][a-zA-Z0-9_]*)(\\()",
+				"beginCaptures": {
+					"1": { "name": "entity.name.function.templo" },
+					"2": { "name": "meta.brace.round.templo" }
+				},
+				"end": "\\)",
+				"endCaptures": {
+					"0": { "name": "meta.brace.round.templo" }
+				},
+				"patterns": [{
+					"include": "#expression"
+				}]
+			}, {
+				"begin": "(\\.)([a-zA-Z_][a-zA-Z0-9_]*)(\\()",
+				"beginCaptures": {
+					"1": { "name": "punctuation.other.templo" },
+					"2": { "name": "entity.name.function.templo" },
+					"3": { "name": "meta.brace.round.templo" }
+				},
+				"end": "\\)",
+				"endCaptures": {
+					"0": { "name": "meta.brace.round.templo" }
+				},
+				"patterns": [{
+					"include": "#expression"
+				}]
+			}, {
+				"match": "\\b(__content__)\\b",
+				"name": "variable.language.templo"
+			}, {
+				"match": "[a-zA-Z_][a-zA-Z0-9_]*",
+				"name": "variable.language.templo"
+			}, {
+				"match": "(\\+|\\-|\\*\\*|\\*|\/\/|\/|%)",
+				"name": "keyword.operator.arithmetic.templo"
+			}, {
+				"match": "(\\.)([a-zA-Z_][a-zA-Z0-9_]*)",
+				"captures": {
+					"1": { "name": "punctuation.other.templo" },
+					"2": { "name": "variable.other.templo.attribute" }
+				}
+			}, {
+				"begin": "\\[",
+				"beginCaptures": {
+					"0": { "name": "punctuation.definition.array.begin.templo" }
+				},
+				"end": "\\]",
+				"endCaptures": {
+					"0": { "name": "punctuation.definition.array.end.templo" }
+				},
+				"patterns": [{
+					"include": "#expression"
+				}]
+			}, {
+				"begin": "\\(",
+				"beginCaptures": {
+					"0": { "name": "meta.brace.round.templo" }
+				},
+				"end": "\\)",
+				"endCaptures": {
+					"0": { "name": "meta.brace.round.templo" }
+				},
+				"patterns": [{
+					"include": "#expression"
+				}]
+			}, {
+				"match": "(\\.|:|\\||,)",
+				"name": "punctuation.other.templo"
+			}, {
+				"match": "(==|<=|=>|<|>|!=)",
+				"name": "keyword.operator.comparison.templo"
+			}, {
+				"match": "=",
+				"name": "keyword.operator.assignment.templo"
+			}, {
+				"begin": "\"",
+				"beginCaptures": {
+					"0": { "name": "punctuation.definition.string.begin.templo" }
+				},
+				"end": "\"",
+				"endCaptures": {
+					"0": { "name": "punctuation.definition.string.end.templo" }
+				},
+				"name": "string.quoted.double.templo",
+				"patterns": [{
+					"include": "#string"
+				}]
+			}, {
+				"begin": "'",
+				"beginCaptures": {
+					"0": { "name": "punctuation.definition.string.begin.templo" }
+				},
+				"end": "'",
+				"endCaptures": {
+					"0": { "name": "punctuation.definition.string.end.templo" }
+				},
+				"name": "string.quoted.single.templo",
+				"patterns": [{
+					"include": "#string"
+				}]
+			}]
+		},
+        "string": {
+            "patterns": [{
+				"include": "#simple_escapes"
+            }, {
+				"include": "#escaped_char"
+            }, {
+				"include": "#escaped_unicode_char"
+            }]
+		},
+        "simple_escapes": {
+            "captures": {
+				"1" : { "name": "constant.character.escape.newline.templo" },
+				"2" : { "name": "constant.character.escape.backlash.templo" },
+                "3" : { "name": "constant.character.escape.double-quote.templo" },
+                "4" : { "name": "constant.character.escape.single-quote.templo" },
+                "5" : { "name": "constant.character.escape.bell.templo" },
+                "6" : { "name": "constant.character.escape.backspace.templo" },
+                "7" : { "name": "constant.character.escape.formfeed.templo" },
+                "8" : { "name": "constant.character.escape.linefeed.templo" },
+                "9" : { "name": "constant.character.escape.return.templo" },
+                "10": { "name": "constant.character.escape.tab.templo" },
+                "11": { "name": "constant.character.escape.vertical-tab.templo" }
+            },
+            "match": "(\\\\\\n)|(\\\\\\\\)|(\\\\\\\")|(\\\\')|(\\\\a)|(\\\\b)|(\\\\f)|(\\\\n)|(\\\\r)|(\\\\t)|(\\\\v)"
+		},
+        "escaped_char": {
+            "match": "\\\\x[0-9A-F]{2}",
+            "name": "constant.character.escape.hex.templo"
+		},
+        "escaped_unicode_char": {
+            "captures": {
+                "1": { "name": "constant.character.escape.unicode.16-bit-hex.templo" },
+                "2": { "name": "constant.character.escape.unicode.32-bit-hex.templo" },
+                "3": { "name": "constant.character.escape.unicode.name.templo" }
+            },
+            "match": "(\\\\U[0-9A-Fa-f]{8})|(\\\\u[0-9A-Fa-f]{4})|(\\\\N\\{[a-zA-Z ]+\\})"
+        }
+	}
+}

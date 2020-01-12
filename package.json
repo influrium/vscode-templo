@@ -1,0 +1,54 @@
+{
+    "name": "templo",
+    "version": "0.0.1",
+    "publisher": "influrium",
+    "author": {
+        "name": "Constantine Teplyakov"
+    },
+    "displayName": "Templo",
+    "description": "Syntax highlighting for templo and haxe.Template",
+    "license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/influrium/vscode-templo"
+    },
+    "bugs": {
+        "url": "https://github.com/influrium/vscode-templo/issues"
+    },
+    "icon": "haxe-logo.png",
+	"galleryBanner": {
+		"color": "#F68712"
+	},
+    "engines": {
+        "vscode": "^1.0.0"
+    },
+    "categories": [
+        "Programming Languages",
+        "Snippets"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "templo",
+            "aliases": ["Templo (HTML)", "templo"],
+            "extensions": [".mtt"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "templo",
+            "scopeName": "text.html.templo",
+            "path": "./syntaxes/templo.json",
+            "embeddedLanguages": {
+                "text.html": "html",
+                "text.xml": "xml",
+                "source.js": "javascript",
+                "source.json": "json",
+                "source.css": "css"
+            }
+        }],
+        "snippets": [{
+            "language": "templo",
+            "scopeName": "text.html.templo",
+            "path": "./snippets/templo.json"
+        }]
+    }
+}
